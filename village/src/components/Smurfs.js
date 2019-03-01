@@ -1,21 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Smurf from './Smurf';
+import Smurf from "./Smurf";
 
 class Smurfs extends Component {
+  state = {
+    isEditing: false
+  };
+
   render() {
     return (
       <div className="Smurfs">
-        <h1>Smurf Village</h1>
         <ul>
           {this.props.smurfs.map(smurf => {
             return (
               <Smurf
+                handleChanges={this.props.handleChanges}
+                deleteSmurf={this.props.deleteSmurf}
+                updateSmurf={this.props.updateSmurf}
+                resetSmurfs={this.props.resetSmurfs}
+                smurfs={this.props.smurfs}
                 name={smurf.name}
                 id={smurf.id}
                 age={smurf.age}
                 height={smurf.height}
                 key={smurf.id}
+                nameMain={this.props.name}
+                ageMain={this.props.age}
+                heightMain={this.props.height}
+                isEditing={this.isEditing}
               />
             );
           })}
@@ -26,7 +38,7 @@ class Smurfs extends Component {
 }
 
 Smurf.defaultProps = {
- smurfs: [],
+  smurfs: []
 };
 
 export default Smurfs;
