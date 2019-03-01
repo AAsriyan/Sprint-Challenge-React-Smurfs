@@ -24,6 +24,14 @@ class App extends Component {
     });
   };
 
+  deleteSmurf = (e, id) => {
+    e.preventDefault();
+
+    axios.delete(`http://localhost:3333/smurfs/${id}`).then(res => {
+      this.setState({ smurfs: res.data });
+    });
+  };
+
   resetSmurfs = res => {
     this.setState({ smurfs: res.data });
   };
@@ -40,13 +48,16 @@ class App extends Component {
           )}
         />
 
-        {/* <SmurfForm resetSmurfs={this.resetSmurfs} /> */}
-
         <Route
           path="/smurfs-list"
-          render={props => <Smurfs {...props} smurfs={this.state.smurfs} />}
+          render={props => (
+            <Smurfs
+              {...props}
+              smurfs={this.state.smurfs}
+              deleteSmurf={this.deleteSmurf}
+            />
+          )}
         />
-        {/* <Smurfs smurfs={this.state.smurfs} /> */}
       </div>
     );
   }

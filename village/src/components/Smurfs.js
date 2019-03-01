@@ -6,11 +6,11 @@ class Smurfs extends Component {
   render() {
     return (
       <div className="Smurfs">
-        <h1>Smurf Village</h1>
         <ul>
           {this.props.smurfs.map(smurf => {
             return (
               <Smurf
+                deleteSmurf={this.props.deleteSmurf}
                 smurfs={this.props.smurfs}
                 name={smurf.name}
                 id={smurf.id}
