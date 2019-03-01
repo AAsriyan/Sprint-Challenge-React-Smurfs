@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import axios from "axios";
 
 class SmurfForm extends Component {
   constructor(props) {
@@ -11,8 +11,8 @@ class SmurfForm extends Component {
     };
   }
 
-  addSmurf = event => {
-    event.preventDefault();
+  addSmurf = e => {
+    e.preventDefault();
     // add code to create the smurf using the api
     const newSmurf = {
       name: this.state.name,
@@ -20,7 +20,7 @@ class SmurfForm extends Component {
       height: this.state.height
     };
 
-    Axios.post("http://localhost:3333/smurfs", newSmurf).then(res => {
+    axios.post("http://localhost:3333/smurfs", newSmurf).then(res => {
       this.props.resetSmurfs(res);
       this.props.history.push("/smurfs-list");
     });
@@ -44,18 +44,24 @@ class SmurfForm extends Component {
             placeholder="name"
             value={this.state.name}
             name="name"
+            required
+            autoComplete="off"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="age"
             value={this.state.age}
             name="age"
+            required
+            autoComplete="off"
           />
           <input
             onChange={this.handleInputChange}
             placeholder="height"
             value={this.state.height}
             name="height"
+            required
+            autoComplete="off"
           />
           <button type="submit">Add to the village</button>
         </form>

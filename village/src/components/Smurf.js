@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+// import { Link } from "react-router-dom";
 import Buttons from "./Buttons";
 
 class Smurf extends Component {
@@ -10,6 +11,11 @@ class Smurf extends Component {
     height: ""
   };
 
+  // componentDidMount() {
+  // change this line to grab the id passed on the URL
+  //   this.fetchSmurf(this.props.id);
+  // }
+
   updateSmurf = (e, id) => {
     e.preventDefault();
 
@@ -19,9 +25,14 @@ class Smurf extends Component {
       height: this.state.height
     };
 
-    axios.put(`http://localhost:3333/smurfs/${id}`, updatedSmurf).then(res => {
-      this.props.resetSmurfs(res);
-    });
+    axios
+      .put(`http://localhost:3333/smurfs/${id}`, updatedSmurf)
+      .then(res => {
+        this.props.resetSmurfs(res);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   toggleEdit = e => {
@@ -42,6 +53,17 @@ class Smurf extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  fetchSmurf = id => {
+    axios
+      .get(`http://localhost:5000/api/smurfs/${id}`)
+      .then(res => {
+        this.props.resetSmurfs(res);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   render() {
     if (this.state.isEditing) {
       return (
@@ -52,7 +74,7 @@ class Smurf extends Component {
             name="name"
             value={this.state.name}
             onChange={this.handleChanges}
-            // autoComplete="off"
+            autoComplete="off"
             required
           />
           <input
@@ -61,7 +83,7 @@ class Smurf extends Component {
             name="age"
             value={this.state.age}
             onChange={this.handleChanges}
-            //autoComplete="off"
+            autoComplete="off"
             required
           />
           <input
@@ -70,7 +92,7 @@ class Smurf extends Component {
             name="height"
             value={this.state.height}
             onChange={this.handleChanges}
-            //autoComplete="off"
+            autoComplete="off"
             required
           />
           <Buttons
@@ -86,6 +108,7 @@ class Smurf extends Component {
       );
     } else {
       return (
+        // <Link to={`/smurfs/${this.props.id}`}>
         <div className="Smurf">
           <h3>{this.props.name}</h3>
           <strong>{this.props.height} tall</strong>
@@ -100,6 +123,7 @@ class Smurf extends Component {
             reset={this.resetEdit}
           />
         </div>
+        // </Link>
       );
     }
   }

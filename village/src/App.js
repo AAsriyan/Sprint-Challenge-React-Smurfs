@@ -3,18 +3,16 @@ import axios from "axios";
 import "./App.css";
 import SmurfForm from "./components/SmurfForm";
 import Smurfs from "./components/Smurfs";
+// import Smurf from "./components/Smurf";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
-import { Route, NavLink, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smurfs: [],
-      name: "",
-      age: "",
-      height: ""
+      smurfs: []
     };
   }
   // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
@@ -39,18 +37,6 @@ class App extends Component {
     });
   };
 
-  updateSmurf = (e, id) => {
-    e.preventDefault();
-
-    const updatedSmurf = {
-      name: this.state.name,
-      age: this.state.age,
-      height: this.state.height
-    };
-
-    axios.put(`http://localhost:3333/smurfs/${id}`, updatedSmurf);
-  };
-
   resetSmurfs = res => {
     this.setState({ smurfs: res.data });
   };
@@ -72,9 +58,6 @@ class App extends Component {
           render={props => (
             <Smurfs
               {...props}
-              nameMain={this.state.name}
-              ageMain={this.state.age}
-              heightMain={this.state.height}
               smurfs={this.state.smurfs}
               handleChanges={this.handleChanges}
               deleteSmurf={this.deleteSmurf}
@@ -83,6 +66,20 @@ class App extends Component {
             />
           )}
         />
+
+        {/* <Route
+          path="/smurfs/:id"
+          render={props => {
+            <Smurf
+              {...props}
+              smurfs={this.state.smurfs}
+              handleChanges={this.handleChanges}
+              deleteSmurf={this.deleteSmurf}
+              updateSmurf={this.updateSmurf}
+              resetSmurfs={this.resetSmurfs}
+            />;
+          }}
+        /> */}
       </div>
     );
   }
