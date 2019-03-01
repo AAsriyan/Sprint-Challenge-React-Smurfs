@@ -9,10 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smurfs: [],
-      name: "",
-      age: "",
-      height: ""
+      smurfs: []
     };
   }
   // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
@@ -25,10 +22,14 @@ class App extends Component {
     });
   };
 
+  resetSmurfs = res => {
+    this.setState({ smurfs: res.data });
+  };
+
   render() {
     return (
       <div className="App">
-        <SmurfForm />
+        <SmurfForm resetSmurfs={this.resetSmurfs} />
         <Smurfs smurfs={this.state.smurfs} />
       </div>
     );
