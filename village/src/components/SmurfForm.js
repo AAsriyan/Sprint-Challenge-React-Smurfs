@@ -22,7 +22,7 @@ class SmurfForm extends Component {
 
     Axios.post("http://localhost:3333/smurfs", newSmurf).then(res => {
       this.props.resetSmurfs(res);
-      console.log(res.data);
+      this.props.history.push("/smurfs-list");
     });
     this.setState({
       name: "",
