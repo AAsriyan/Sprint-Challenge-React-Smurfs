@@ -11,7 +11,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smurfs: []
+      smurfs: [],
+      name: "",
+      age: "",
+      height: ""
     };
   }
   // add any needed code to ensure that the smurfs collection exists on state and it has data coming from the server
@@ -24,12 +27,28 @@ class App extends Component {
     });
   };
 
+  handleChanges = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   deleteSmurf = (e, id) => {
     e.preventDefault();
 
     axios.delete(`http://localhost:3333/smurfs/${id}`).then(res => {
       this.setState({ smurfs: res.data });
     });
+  };
+
+  updateSmurf = (e, id) => {
+    e.preventDefault();
+
+    const updatedSmurf = {
+      name: this.state.name,
+      age: this.state.age,
+      height: this.state.height
+    };
+
+    axios.put(`http://localhost:3333/smurfs/${id}`, updatedSmurf);
   };
 
   resetSmurfs = res => {
@@ -53,8 +72,14 @@ class App extends Component {
           render={props => (
             <Smurfs
               {...props}
+              nameMain={this.state.name}
+              ageMain={this.state.age}
+              heightMain={this.state.height}
               smurfs={this.state.smurfs}
+              handleChanges={this.handleChanges}
               deleteSmurf={this.deleteSmurf}
+              updateSmurf={this.updateSmurf}
+              resetSmurfs={this.resetSmurfs}
             />
           )}
         />

@@ -5,11 +5,9 @@ const Buttons = props => {
     <div>
       <button onClick={e => props.deleteSmurf(e, props.id)}>Delete</button>
       {!props.isEditing ? (
-        <button onClick={props.handleEdit}>Update</button>
+        <button onClick={props.toggleEdit}>Update</button>
       ) : (
-        <button
-          onClick={e => props.updateFriend(e, props.friend.id, props.reset())}
-        >
+        <button onClick={e => props.updateSmurf(e, props.id, props.reset())}>
           Submit
         </button>
       )}
